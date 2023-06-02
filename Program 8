@@ -1,0 +1,92 @@
+program multiplesOfAnotherProgram;
+#include( "stdlib.hhf" );
+
+// Define a procedure called "multiplesOfAnother" that takes two int32 parameters, i and j.
+procedure multiplesOfAnother(i: int32; j: int32 ); @nodisplay; @noframe;
+begin multiplesOfAnother;
+    // Pop the return address from the stack and store it in EAX.
+    pop(EAX);
+    // Pop the value of j from the stack and store it in EBX.
+    pop(j);
+    // Pop the value of i from the stack and store it in EBX.
+    pop(i);
+    // Push the return address back onto the stack.
+    push(EAX);
+    // Move the value of j to EBX for later comparison.
+    mov(j, EBX);
+    // Compare i to j.
+    cmp(i, EBX);
+    // If i is equal to j, jump to the IisequaltoJ label.
+    je IisequaltoJ;
+    // If i is greater than j, jump to the IisgreaterthanJ label.
+    jg IisgreaterthanJ;
+    // If i is less than j, jump to the JisgreaterthanI label.
+    jmp JisgreaterthanI;
+
+    JisgreaterthanI:
+        // Set EBX to 0 and then copy the value of i to EBX.
+        mov(0, EBX);
+        mov(i, EBX);
+        // Repeat the following block until the value in EBX is greater than j.
+        JisgreaterthanI_re:
+            add(i, EBX);
+            cmp(j, EBX);
+        jg JisgreaterthanI_re;
+        // If the value in EBX is equal to j, jump to the IisequaltoJ label.
+        je IisequaltoJ;
+        // If the value in EBX is less than j, jump to the NotMultiples label.
+        jl NotMultiples;
+
+    IisgreaterthanJ:
+        // Set EBX to 0 and then copy the value of j to EBX.
+        mov(0, EBX);
+        mov(j, EBX);
+        // Repeat the following block until the value in EBX is greater than i.
+        IisgreaterthanJ_re:
+            add(j, EBX);
+            cmp(i, EBX);
+        jg IisgreaterthanJ_re;
+        // If the value in EBX is equal to i, jump to the IisequaltoJ label.
+        je IisequaltoJ;
+        // If the value in EBX is less than i, jump to the NotMultiples label.
+        jl NotMultiples;
+
+    IisequaltoJ:
+        // Set EAX to 1 to indicate that i is a multiple of j.
+        mov(1, EAX);
+        // Jump to the EndOfProcdure label.
+        jmp EndOfProcdure;
+    NotMultiples:
+        // Set EAX to 0 to indicate that i is not a multiple of j.
+        mov(0, EAX);
+        // Jump to the EndOfProcdure label.
+        jmp EndOfProcdure;
+    EndOfProcdure:
+        // Output the value of EAX to the console.
+        stdout.put( "EAX = ",  (type int32 eax));
+        // Return from the procedure.
+        ret();
+end multiplesOfAnother;
+
+// The main program.
+
+begin multiplesOfAnotherProgram;
+    // Prompt the user to enter a value for i.
+    stdout.put( "Feed Me i:" );
+    // Read an int32 value from the standard input and store it in EAX.
+    stdin.geti32(); 
+    // Push the value of EAX onto the stack.
+    push(EAX); 
+    // Move the value of EAX into ECX.
+    mov(EAX, ECX);
+    // Prompt the user to enter a value for j.
+    stdout.put( "Feed Me j:" );
+    // Read an int32 value from the standard input and store it in EAX.
+    stdin.geti32(); 
+    // Push the value of EAX onto the stack.
+    push(EAX); 
+    // Move the value of EAX into EDX.
+    mov(EAX, EDX);
+    // Call the multiplesOfAnother procedure with the values of i and j as arguments.
+    multiplesOfAnother(ECX, EDX);
+end multiplesOfAnotherProgram;
