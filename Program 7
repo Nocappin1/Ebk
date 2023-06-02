@@ -1,0 +1,132 @@
+program DollarValueMenu;
+
+#include( "stdlib.hhf" );
+static
+    userInput: int16; 
+    valueitem_N: int16;
+    dollar_N: int16; 
+    subLoop_N: int16; 
+    sumDollar: int16;
+
+begin DollarValueMenu;
+    stdout.put(nl, "Feed me your order as 4 hex digits: " );
+    stdin.get( BX );
+    mov(BX , userInput ); 
+    stdout.put( nl );
+
+    mov(0, BX);
+    mov(BX, dollar_N);
+
+    mov(0, BX);
+    mov(BX, subLoop_N);
+
+    //************One Dollar Part************
+    inc(dollar_N);
+    mov(userInput, CX);
+    shr(12, CX);
+    and(7, CX);
+    mov(CX , valueitem_N ); 
+    
+    mov(valueitem_N, BX);
+    mov(BX, subLoop_N);
+    OneDollarLoop:
+        cmp( subLoop_N, 0 );
+        je OneDollarLoopEnd; 
+        mov(sumDollar, DX);
+        add(dollar_N, DX);
+        mov(DX, sumDollar);
+        dec( subLoop_N );
+        jmp OneDollarLoop; 
+    OneDollarLoopEnd:
+
+    stdout.put( valueitem_N, " $", dollar_N, " item", nl);
+
+    //************Two Dollar Part************
+    inc(dollar_N);
+    mov(userInput, CX);
+    shr(9, CX);
+    and(7, CX);
+    mov(CX , valueitem_N ); 
+      
+    mov(valueitem_N, BX);
+    mov(BX, subLoop_N);
+    TwoDollarLoop:
+        cmp( subLoop_N, 0 );
+        je TwoDollarLoopEnd; 
+        mov(sumDollar, DX);
+        add(dollar_N, DX);
+        mov(DX, sumDollar);
+        dec( subLoop_N );
+        jmp TwoDollarLoop; 
+    TwoDollarLoopEnd:
+
+    stdout.put( valueitem_N, " $", dollar_N, " item", nl);
+
+    //************Three Dollar Part************     
+
+    inc(dollar_N);
+    mov(userInput, CX);
+    shr(6, CX);
+    and(7, CX);
+    mov(CX , valueitem_N ); 
+       
+    mov(valueitem_N, BX);
+    mov(BX, subLoop_N);
+    ThreeDollarLoop:
+        cmp( subLoop_N, 0 );
+        je ThreeDollarLoopEnd; 
+        mov(sumDollar, DX);
+        add(dollar_N, DX);
+        mov(DX, sumDollar);
+        dec( subLoop_N );
+        jmp ThreeDollarLoop; 
+    ThreeDollarLoopEnd:
+    
+    stdout.put( valueitem_N, " $", dollar_N, " item", nl);
+
+    //************Four Dollar Part************     
+    inc(dollar_N);
+    mov(userInput, CX);
+    shr(3, CX);
+    and(7, CX);
+    mov(CX , valueitem_N ); 
+       
+    mov(valueitem_N, BX);
+    mov(BX, subLoop_N);
+    FourDollarLoop:
+        cmp( subLoop_N, 0 );
+        je FourDollarLoopEnd; 
+        mov(sumDollar, DX);
+        add(dollar_N, DX);
+        mov(DX, sumDollar);
+        dec( subLoop_N );
+        jmp FourDollarLoop; 
+    FourDollarLoopEnd:
+
+    stdout.put( valueitem_N, " $", dollar_N, " item", nl);
+
+    //************Five Dollar Part************        
+    inc(dollar_N);
+    mov(userInput , CX ); 
+    shr(0, CX);
+    and(7, CX);
+    mov(CX , valueitem_N ); 
+       
+    mov(valueitem_N, BX);
+    mov(BX, subLoop_N);
+    FiveDollarLoop:
+        cmp( subLoop_N, 0 );
+        je FiveDollarLoopEnd; 
+        mov(sumDollar, DX);
+        add(dollar_N, DX);
+        mov(DX, sumDollar);
+        dec( subLoop_N );
+        jmp FiveDollarLoop; 
+    FiveDollarLoopEnd:
+    
+    stdout.put( valueitem_N, " $", dollar_N, " item", nl);
+
+    //************Sum Dollar Part************     
+    stdout.put( nl, "Total Order Costs: $",sumDollar, nl);
+
+end DollarValueMenu;
