@@ -1,0 +1,59 @@
+program hasDuplicates;  // This is the start of the program.
+
+#include( "stdlib.hhf" );  // Include the "stdlib.hhf" library which has some useful macros and procedures.
+
+procedure ProcedureofhasDuplicates(x: int16; y: int16; z: int16 ); @nodisplay; @noframe; 
+// This is the declaration of a procedure named "ProcedureofhasDuplicates". It takes in three int16 arguments and has the @nodisplay and @noframe directives which means that the procedure will not display a stack frame or use the PROC directive.
+begin ProcedureofhasDuplicates; // This is the start of the ProcedureofhasDuplicates procedure.
+
+    pop(EDX); // Pop the value in the EDX register and discard it.
+    pop(z); // Pop the value of z off the stack and store it in the z variable.
+    pop(y); // Pop the value of y off the stack and store it in the y variable.
+    pop(x); // Pop the value of x off the stack and store it in the x variable.
+    push(EDX); // Push the value of EDX back onto the stack.
+
+    mov(z, DX); // Move the value of z into the DX register.
+    mov(y, CX); // Move the value of y into the CX register.
+    mov(x, BX); // Move the value of x into the BX register.
+
+    cmp(BX, CX); // Compare the value of BX with the value of CX.
+    je FoundDuplicate; // If they are equal, jump to the FoundDuplicate label.
+
+    cmp(CX, DX); // Compare the value of CX with the value of DX.
+    je FoundDuplicate; // If they are equal, jump to the FoundDuplicate label.
+
+    cmp(BX, DX); // Compare the value of BX with the value of DX.
+    je FoundDuplicate; // If they are equal, jump to the FoundDuplicate label.
+    
+    jmp NotDuplicate; // If none of the above conditions are true, jump to the NotDuplicate label.
+
+    FoundDuplicate: // This is the FoundDuplicate label.
+        mov(1, AL); // Move the value 1 into the AL register.
+        jmp EndOfProcdure; // Jump to the EndOfProcedure label.
+
+    NotDuplicate: // This is the NotDuplicate label.
+        mov(0, AL); // Move the value 0 into the AL register.
+        jmp EndOfProcdure; // Jump to the EndOfProcedure label.
+
+    EndOfProcdure: // This is the EndOfProcedure label.
+        stdout.put( "AL = ",  (type int8 AL)); // Print "AL = " followed by the value in the AL register to the console.
+        ret(); // Return from the procedure.
+
+end ProcedureofhasDuplicates; // This is the end of the ProcedureofhasDuplicates procedure.
+
+begin hasDuplicates; // This is the start of the main program.
+
+    stdout.put( "Feed Me x:" ); // Print "Feed Me x:" to the console.
+    stdin.geti16();  // Read an int16 from the console and store it in the AX register.
+    push(AX); // Push the value in the AX register onto the stack.
+
+    stdout.put( "Feed Me y:" ); // Print "Feed Me y:" to the console.
+    stdin.geti16();  // Read an int16 from the console and store it in the
+    push(AX); 
+
+    stdout.put( "Feed Me z:" ); // Print "Feed Me z:" to the console.
+    stdin.geti16();  // Read an int16 from the console and store it in the
+    push(AX); 
+
+    call ProcedureofhasDuplicates;
+end hasDuplicates;
