@@ -1,0 +1,33 @@
+program BigNumbers;
+#include ("stdlib.hhf")  // include the HLA standard library
+
+static
+    userInput: int8;    // variable to hold user input          
+    outerValue: int8;   // variable to use for outer loop index
+    innerValue: int8;   // variable to use for inner loop index
+
+begin BigNumbers;
+    stdout.put("Gimme a decimal value to use for n: ");  // prompt user for input
+    stdin.get(userInput);                                // read user input
+    stdout.put("Here is your answer : ");               // print a message to the console
+
+    mov( userInput, AL );    // move user input to AL register
+    mov( AL, outerValue );   // move value from AL register to outerValue variable
+
+	OuterLoop:
+		cmp( outerValue, 0 );  // compare outerValue to 0
+ 		je OuterLoopEnd;       // if outerValue equals 0, jump to OuterLoopEnd label
+        mov(userInput, AL);    // move user input to AL register
+        sub(outerValue, AL);   // subtract outerValue from AL register
+        mov(AL, innerValue);   // move value from AL register to innerValue variable
+            InnerLoop:
+                stdout.put(outerValue);  // print the value of outerValue to the console
+		        cmp( innerValue, 0 );    // compare innerValue to 0
+                je InnerLoopEnd;         // if innerValue equals 0, jump to InnerLoopEnd label
+                dec( innerValue );       // decrement innerValue by 1
+                jmp InnerLoop;           // jump to InnerLoop label
+            InnerLoopEnd:
+        dec( outerValue );     // decrement outerValue by 1
+		jmp OuterLoop;          // jump to OuterLoop label
+    OuterLoopEnd:             // label for OuterLoop end
+end BigNumbers;              // end of program
