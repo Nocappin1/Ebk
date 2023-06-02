@@ -1,0 +1,98 @@
+program RollingTable;
+#include ("stdlib.hhf")
+
+static
+    userInput: int8;                    //User input value
+    dispValue: int8;      
+    tempValue: int8;                  //Cell value of table
+
+begin RollingTable;
+    stdout.put("Gimme a starting value: ");
+    stdin.get(userInput);
+
+    // Display table headers
+    stdout.put("Rolling Table", nl);
+
+    // Display row 1
+
+    mov(userInput, AL);
+    mov(AL, dispValue);
+    stdout.put(dispValue, ": ");
+
+    movsx(dispValue, EAX);
+    rol(1, EAX);                  
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");  
+    
+    movsx(dispValue, EAX);
+    ror(1, EAX);           
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");     
+
+    movsx(dispValue, EAX);
+    rol(2, EAX);                
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");  
+    
+    movsx(dispValue, EAX);
+    ror(2, EAX);         
+    mov(AL, tempValue);
+    stdout.put(tempValue, nl);    
+
+    
+    // Display row 2
+
+    mov(userInput, AL);
+    mov(AL, dispValue);
+    add(1, dispValue);
+    stdout.put(dispValue, ": ");
+
+    movsx(dispValue, EAX);
+    rol(1, EAX);                  
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");  
+    
+    movsx(dispValue, EAX);
+    ror(1, EAX);           
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");     
+
+    movsx(dispValue, EAX);
+    rol(2, EAX);                
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");  
+    
+    movsx(dispValue, EAX);
+    ror(2, EAX);         
+    mov(AL, tempValue);
+    stdout.put(tempValue, nl);    
+
+    // Display row 3
+
+    mov(userInput, AL);
+    mov(AL, dispValue);
+    add(2, dispValue);
+    stdout.put(dispValue, ": ");
+
+    movsx(dispValue, EAX);
+    rol(1, EAX);                  
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");  
+    
+    movsx(dispValue, EAX);
+    ror(1, EAX);           
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");     
+
+    movsx(dispValue, EAX);
+    rol(2, EAX);                
+    mov(AL, tempValue);
+    stdout.put(tempValue, " ");  
+    
+    movsx(dispValue, EAX);
+    ror(2, EAX);         
+    mov(AL, tempValue);
+    stdout.put(tempValue, nl);   
+  
+    
+end RollingTable;
