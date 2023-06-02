@@ -1,0 +1,66 @@
+program Crazy8sGame;
+#include ("stdlib.hhf")  // include the HLA standard library
+
+static
+    userInput: int32;          // variable to hold user input
+    currentValue: int32;      // variable to hold current value
+    inputNum: int8;           // variable to use for input loop index
+    continueNum: int8;        // variable to use for continue loop index
+    detect8Flag: boolean;     // flag to detect if 8 is present
+
+begin Crazy8sGame;
+
+    stdout.put(nl, "***** Game Start! *****", nl, nl); // print welcome message
+
+    ContinueCheckLoop:
+        add(1, continueNum);   // increment continueNum by 1
+        mov(0 , inputNum );    // reset inputNum to 0
+        mov(false , detect8Flag );  // reset detect8Flag to false
+
+        InputThreeNumbersLoop:
+            add(1, inputNum);  // increment inputNum by 1
+            stdout.put("Gimme a number ",continueNum, "-", inputNum, ": ");  // prompt user for input
+            stdin.get(userInput);                                  // read user input
+            mov( userInput, EAX );    
+            mov( EAX, currentValue );   // move user input to currentValue variable
+
+            SubtractLoop:
+                cmp( currentValue, 10 );  // compare currentValue to 10
+                jl SubtractLoopEnd;       // if currentValue is less than 10, jump to SubtractLoopEnd label
+                sub( 10, EAX );           // subtract 10 from EAX register
+                mov( EAX, currentValue );  // move value from EAX register to currentValue variable
+                cmp( currentValue, 10 );  // compare currentValue to 10
+                jge SubtractLoop;         // if currentValue is greater than or equal to 10, jump to SubtractLoop label
+            SubtractLoopEnd:         
+            
+            cmp( currentValue, 8 );     // compare currentValue to 8
+            je setFlag;                  // if currentValue equals 8, jump to setFlag label
+            jmp setFlag_skip;            // otherwise, jump to setFlag_skip label
+            setFlag:
+                mov( true, detect8Flag );   // set detect8Flag to true
+            setFlag_skip:
+
+            cmp( inputNum, 3 );           // compare inputNum to 3
+            jl InputThreeNumbersLoop;     // if inputNum is less than 3, jump to InputThreeNumbersLoop label
+            jmp InputThreeNumbersLoopEnd; // otherwise, jump to InputThreeNumbersLoopEnd label
+
+        InputThreeNumbersLoopEnd:
+        // stdout.put(detect8Flag, nl); // uncomment this line to print the value of detect8Flag for debugging
+
+        cmp( detect8Flag, false );       // compare detect8Flag to false
+        je loseMsg;                      // if detect8Flag equals false, jump to loseMsg label
+        jne possibleMsg;                 // otherwise, jump to possibleMsg label
+        loseMsg:
+            stdout.put(nl, "***** Sorry Charlie! You lose the game! *****", nl); // print losing message
+            jmp ContinueCheckLoopEnd;  // jump to ContinueCheckLoopEnd label
+        possibleMsg:
+            stdout.put(nl, "One of them ends in eight!", nl, nl);   // print possible winning message
+            jmp Check3times;          // jump to Check3times label
+
+        Check3times:
+            cmp( continueNum, 3 );       // compare continueNum to 3
+            jl ContinueCheckLoop;       
+            stdout.put(nl, "***** You Win the Game! *****", nl); // print losing message
+            jmp ContinueCheckLoopEnd;   // jump to Check3times ContinueCheckLoopEnd
+    ContinueCheckLoopEnd:
+end Crazy8sGame;   
